@@ -6,8 +6,8 @@ provider:
   runtime: nodejs18.x
 
 functions:
-  api:
-    handler: index.handler
+  convertkit-ghost:
+    handler: src/index.handler
     events:
       - httpApi:
           path: /
