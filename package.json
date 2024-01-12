@@ -1,6 +1,7 @@
 {
   "name": "ghost-convertkit-integration",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "serverless offline",
     "deploy": "serverless deploy function -f convertkit-ghost --stage production",
@@ -12,11 +13,13 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.1.1",
-    "serverless": "^3.38.0"
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.2"
   },
   "dependencies": {
     "@tryghost/admin-api": "^1.13.11",
     "axios": "^1.6.5",
+    "inquirer": "^9.2.12",
     "zod": "^3.22.4"
   }
 }

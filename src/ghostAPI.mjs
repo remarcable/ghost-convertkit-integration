@@ -1,20 +1,6 @@
-const GhostAdminAPI = require("@tryghost/admin-api");
-const z = require("zod");
+import client from "./ghostClient";
 
-const { GHOST_URL, GHOST_API_KEY } = z
-  .object({
-    GHOST_URL: z.string().url(),
-    GHOST_API_KEY: z.string(),
-  })
-  .parse(process.env);
-
-const api = new GhostAdminAPI({
-  url: GHOST_URL,
-  key: GHOST_API_KEY,
-  version: "v5.71",
-});
-
-const subscribeGhostMember = async ({ name, email }) => {
+export const subscribeGhostMember = async ({ name, email }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (member) {
@@ -25,7 +11,7 @@ const subscribeGhostMember = async ({ name, email }) => {
 };
 
 const getGhostMemberByEmail = async ({ email }) => {
-  const [member] = await api.members.browse({
+  const [member] = await client.members.browse({
     filter: `email:'${email}'`,
     limit: 1,
   });
@@ -34,9 +20,9 @@ const getGhostMemberByEmail = async ({ email }) => {
 };
 
 const createGhostMember = async ({ name, email }) => {
-  const newsletters = await api.newsletters.browse();
+  const newsletters = await client.newsletters.browse();
 
-  return api.members.add({
+  return client.members.add({
     name,
     email,
     newsletters: newsletters.map((newsletter) => ({
@@ -46,19 +32,19 @@ const createGhostMember = async ({ name, email }) => {
   });
 };
 
-const unsubscribeGhostMember = async ({ email }) => {
+export const unsubscribeGhostMember = async ({ email }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (!member) {
     throw new Error("Member not found");
   }
 
-  return api.members.edit({ id: member.id, newsletters: [] });
+  return client.members.edit({ id: member.id, newsletters: [] });
 };
 
 const resubscribeGhostMember = async ({ id }) => {
-  const newsletters = await api.newsletters.browse();
-  return api.members.edit({
+  const newsletters = await client.newsletters.browse();
+  return client.members.edit({
     id,
     newsletters: newsletters.map((newsletter) => ({
       id: newsletter.id,
@@ -67,35 +53,28 @@ const resubscribeGhostMember = async ({ id }) => {
   });
 };
 
-const addLabelToGhostSubscriber = async ({ email, labelName }) => {
+export const addLabelToGhostSubscriber = async ({ email, labelName }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (!member) {
     throw new Error("Member not found");
   }
 
-  api.members.edit({
+  client.members.edit({
     id: member.id,
     labels: [...member.labels, { name: labelName }],
   });
 };
 
-const removeLabelFromGhostSubscriber = async ({ email, labelName }) => {
+export const removeLabelFromGhostSubscriber = async ({ email, labelName }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (!member) {
     throw new Error("Member not found");
   }
 
-  return api.members.edit({
+  return client.members.edit({
     id: member.id,
     labels: member.labels.filter((label) => label.name !== labelName),
   });
-};
-
-module.exports = {
-  subscribeGhostMember,
-  unsubscribeGhostMember,
-  addLabelToGhostSubscriber,
-  removeLabelFromGhostSubscriber,
 };

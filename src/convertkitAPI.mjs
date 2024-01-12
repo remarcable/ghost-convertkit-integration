@@ -1,21 +1,11 @@
-const z = require("zod");
-const axios = require("axios").default;
+import z from "zod";
+import client from "./convertkitClient.mjs";
 
-const { CONVERTKIT_API_SECRET, CONVERTKIT_SEQUENCE_ID } = z
+const { CONVERTKIT_SEQUENCE_ID } = z
   .object({
-    CONVERTKIT_API_SECRET: z.string(),
     CONVERTKIT_SEQUENCE_ID: z.string(),
   })
   .parse(process.env);
-
-const api = axios.create({
-  baseURL: "https://api.convertkit.com/v3",
-  timeout: 1000,
-  responseType: "json",
-  params: {
-    api_secret: CONVERTKIT_API_SECRET,
-  },
-});
 
 const subscribeConvertkitMember = async ({ name, email }) => {
   const member = await getConvertkitMemberByEmail({ email });
@@ -32,7 +22,7 @@ const subscribeConvertkitMember = async ({ name, email }) => {
   // by signing up again with the CK form, not just in Ghost
   // BUT this might be a way for the data to go out of sync
 
-  return api
+  return client
     .post(`/sequences/${CONVERTKIT_SEQUENCE_ID}/subscribe`, {
       email,
       first_name: name,
@@ -41,7 +31,7 @@ const subscribeConvertkitMember = async ({ name, email }) => {
 };
 
 const getConvertkitMemberByEmail = async ({ email }) => {
-  return api
+  return client
     .get("/subscribers", {
       params: {
         email_address: email,
@@ -51,7 +41,7 @@ const getConvertkitMemberByEmail = async ({ email }) => {
 };
 
 const unsubscribeConvertkitMember = async ({ email }) => {
-  return api.put("/unsubscribe", { email }).then((res) => res?.data);
+  return client.put("/unsubscribe", { email }).then((res) => res?.data);
 };
 
 const addLabelToConvertkitSubscriber = async ({ email, label }) => {
@@ -60,7 +50,7 @@ const addLabelToConvertkitSubscriber = async ({ email, label }) => {
     tagId = await createNewLabel({ label });
   }
 
-  return api.post(`/tags/${tagId}/subscribe`, { email });
+  return client.post(`/tags/${tagId}/subscribe`, { email });
 };
 
 const removeLabelFromConvertkitSubscriber = async ({ email, label }) => {
@@ -70,13 +60,13 @@ const removeLabelFromConvertkitSubscriber = async ({ email, label }) => {
     return;
   }
 
-  return api
+  return client
     .post(`/tags/${tagId}/unsubscribe`, { email })
     .then((res) => res?.data);
 };
 
 const createNewLabel = async ({ label }) => {
-  const tag = await api
+  const tag = await client
     .post(`/tags`, { tag: { name: label } })
     .then((res) => res.data);
 
@@ -84,13 +74,14 @@ const createNewLabel = async ({ label }) => {
 };
 
 const getTagIdFromLabel = async ({ label }) => {
-  const tags = await api.get("/tags").then((res) => res?.data?.tags);
+  const tags = await client.get("/tags").then((res) => res?.data?.tags);
   return tags.filter((tag) => tag.name === label)?.[0]?.id;
 };
 
-module.exports = {
+export {
   subscribeConvertkitMember,
   unsubscribeConvertkitMember,
   addLabelToConvertkitSubscriber,
   removeLabelFromConvertkitSubscriber,
+  getTagIdFromLabel,
 };

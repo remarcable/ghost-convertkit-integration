@@ -20,7 +20,9 @@
 // unsubscibre ck => ghost
 // un/sub ghost => ck
 
-module.exports.handler = async (event) => {
+export const handler = async (event) => {
+  console.log(event);
+
   return {
     statusCode: 200,
     body: JSON.stringify(
