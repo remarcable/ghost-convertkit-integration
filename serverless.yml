@@ -10,7 +10,9 @@ functions:
     handler: src/index.handler
     environment:
       GHOST_API_KEY: ${env:GHOST_API_KEY}
-      CONVERTKIT_API_KEY: ${env:CONVERTKIT_API_KEY}
+      GHOST_URL: ${env:GHOST_URL}
+      CONVERTKIT_API_SECRET: ${env:CONVERTKIT_API_SECRET}
+      CONVERTKIT_SEQUENCE_ID: ${env:CONVERTKIT_SEQUENCE_ID}
     events:
       - httpApi:
           path: /

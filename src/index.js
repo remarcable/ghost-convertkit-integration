@@ -10,6 +10,7 @@
 // also in ghost: what happens when user resubscribe?
 // also in ck: what happens when users sign up multiple times or for multiple forms?
 
+// TODO: following URL is now in git. Might need a secret for the webhooks
 // current deployment: https://233zx64y80.execute-api.us-east-1.amazonaws.com/
 
 // need a simple script to setup the integration, i.e. create webhooks both in ghost and ck
@@ -32,12 +33,3 @@ module.exports.handler = async (event) => {
     ),
   };
 };
-
-const createGhostMember = () => {};
-const createConvertkitMember = () => {};
-
-const unsubscribeGhostMember = () => {};
-const unsubscribeConvertkitMember = () => {};
-
-const addTagToGhostSubscriber = () => {};
-const removeTagFromGhostSubscriber = () => {};
