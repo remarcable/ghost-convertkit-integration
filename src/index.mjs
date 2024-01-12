@@ -25,14 +25,14 @@ import { handleGhostEvent } from "./handleGhostEvent.mjs";
 
 export const handler = async (event) => {
   const { rawPath } = event;
-  const [service, eventName] = rawPath.split("/").slice(1);
+  const [service, eventName, extraInfo] = rawPath.split("/").slice(1);
 
   if (service === "convertkit") {
-    return handleConvertkitEvent({ eventName, event });
+    return handleConvertkitEvent({ eventName, event, extraInfo });
   }
 
   if (service === "ghost") {
-    return handleGhostEvent({ eventName, event });
+    return handleGhostEvent({ eventName, event, extraInfo });
   }
 
   return {

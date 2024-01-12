@@ -1,4 +1,4 @@
-import client from "./ghostClient";
+import client from "./ghostClient.mjs";
 
 export const subscribeGhostMember = async ({ name, email }) => {
   const member = await getGhostMemberByEmail({ email });
@@ -53,7 +53,7 @@ const resubscribeGhostMember = async ({ id }) => {
   });
 };
 
-export const addLabelToGhostSubscriber = async ({ email, labelName }) => {
+export const addLabelToGhostSubscriber = async ({ email, label }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (!member) {
@@ -62,11 +62,11 @@ export const addLabelToGhostSubscriber = async ({ email, labelName }) => {
 
   client.members.edit({
     id: member.id,
-    labels: [...member.labels, { name: labelName }],
+    labels: [...member.labels, { name: label }],
   });
 };
 
-export const removeLabelFromGhostSubscriber = async ({ email, labelName }) => {
+export const removeLabelFromGhostSubscriber = async ({ email, label }) => {
   const member = await getGhostMemberByEmail({ email });
 
   if (!member) {
@@ -75,6 +75,6 @@ export const removeLabelFromGhostSubscriber = async ({ email, labelName }) => {
 
   return client.members.edit({
     id: member.id,
-    labels: member.labels.filter((label) => label.name !== labelName),
+    labels: member.labels.filter((l) => l.name !== label),
   });
 };

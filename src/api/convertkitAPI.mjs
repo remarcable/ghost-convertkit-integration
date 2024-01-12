@@ -78,23 +78,31 @@ const getTagIdFromLabel = async ({ label }) => {
   return tags.filter((tag) => tag.name === label)?.[0]?.id;
 };
 
-const getWebhookUrl = ({ eventName, baseUrl }) => {
-  return new URL(`/convertkit/${eventName}`, baseUrl).toString();
+const getWebhookUrl = ({ eventName, baseUrl, label }) => {
+  return new URL(
+    `/convertkit/${eventName}/${label ? label : ""}`,
+    baseUrl,
+  ).toString();
 };
 
-const printActiveWebhooks = async () => {
+export const getActiveWebhooks = async () => {
   const webhooks = await client
     .get("/automations/hooks")
     .then((res) => res.data);
 
+  return webhooks;
+};
+
+export const webhookToString = ({ rule }) => {
+  return `${rule.id} | ${rule.event.name} | ${rule.target_url}`;
+};
+
+const printActiveWebhooks = async () => {
+  const webhooks = await getActiveWebhooks();
+
   console.log("The following webhooks are currently registered:");
   webhooks.forEach((hook) => {
-    const { rule } = hook;
-    console.log(
-      `${rule.id} | ${rule.event.name} ${rule.event.tag_id ?? ""} | ${
-        rule.target_url
-      }`,
-    );
+    console.log(webhookToString(hook));
   });
 };
 

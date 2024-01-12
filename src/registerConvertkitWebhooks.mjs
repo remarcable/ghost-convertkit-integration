@@ -12,9 +12,9 @@ const events = [
   "subscriber.subscriber_unsubscribe",
 ];
 
-const { webhookUrl, tags } = await inquirer.prompt([
+const { baseUrl, tags } = await inquirer.prompt([
   {
-    name: "webhookUrl",
+    name: "baseUrl",
     message: "What is your deployment URL for the serverless function?",
     validate: z.string().url().validate,
   },
@@ -27,7 +27,10 @@ const { webhookUrl, tags } = await inquirer.prompt([
 ]);
 
 const tagIds = await Promise.all(
-  tags.filter(Boolean).map((tag) => getTagIdFromLabel({ label: tag })),
+  tags.filter(Boolean).map(async (label) => ({
+    tagId: await getTagIdFromLabel({ label }),
+    label,
+  })),
 );
 
 const allEvents = [
@@ -35,9 +38,9 @@ const allEvents = [
     name: event,
     extraData: {},
   })),
-  ...tagIds.flatMap((tagId) => [
-    { name: "subscriber.tag_add", extraData: { tag_id: tagId } },
-    { name: "subscriber.tag_remove", extraData: { tag_id: tagId } },
+  ...tagIds.flatMap(({ tagId, label }) => [
+    { name: "subscriber.tag_add", label, extraData: { tag_id: tagId } },
+    { name: "subscriber.tag_remove", label, extraData: { tag_id: tagId } },
   ]),
 ];
 
@@ -45,9 +48,13 @@ console.log("Registering new webhooks...");
 
 try {
   await Promise.all(
-    allEvents.map(async ({ name, extraData }) => {
+    allEvents.map(async ({ name, extraData, label }) => {
       await client.post("/automations/hooks", {
-        target_url: getWebhookUrl({ eventName: name, baseUrl: webhookUrl }),
+        target_url: getWebhookUrl({
+          eventName: name,
+          baseUrl,
+          label,
+        }),
         event: { name, ...extraData },
       });
     }),
@@ -55,7 +62,7 @@ try {
 
   console.log("Successfully registered webhooks...");
 } catch (error) {
-  console.log("Failed registering webhooks...");
+  console.log("Failed registering webhooks...", error);
 }
 
 await printActiveWebhooks();
