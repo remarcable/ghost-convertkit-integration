@@ -18,8 +18,5 @@ functions:
       CONVERTKIT_SEQUENCE_ID: ${env:CONVERTKIT_SEQUENCE_ID}
     events:
       - httpApi:
-          path: /
-          method: get
-      - httpApi:
-          path: /
-          method: post
+          path: /{proxy+}
+          method: any

@@ -20,15 +20,27 @@
 // unsubscibre ck => ghost
 // un/sub ghost => ck
 
+import { handleConvertkitEvent } from "./handleConvertkitEvent.mjs";
+import { handleGhostEvent } from "./handleGhostEvent.mjs";
+
 export const handler = async (event) => {
-  console.log(event);
+  const { rawPath } = event;
+  const [service, eventName] = rawPath.split("/").slice(1);
+
+  if (service === "convertkit") {
+    return handleConvertkitEvent({ eventName, event });
+  }
+
+  if (service === "ghost") {
+    return handleGhostEvent({ eventName, event });
+  }
 
   return {
-    statusCode: 200,
+    statusCode: 400,
     body: JSON.stringify(
       {
-        message: "Go Serverless v3.0! Your function executed successfully!",
-        input: event,
+        status: 400,
+        message: "Unknown service",
       },
       null,
       2,

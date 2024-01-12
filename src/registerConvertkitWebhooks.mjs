@@ -1,5 +1,9 @@
-import client from "./convertkitClient.mjs";
-import { getTagIdFromLabel } from "./convertkitAPI.mjs";
+import client from "./api/convertkitClient.mjs";
+import {
+  getTagIdFromLabel,
+  getWebhookUrl,
+  printActiveWebhooks,
+} from "./api/convertkitAPI.mjs";
 import inquirer from "inquirer";
 import z from "zod";
 
@@ -43,7 +47,7 @@ try {
   await Promise.all(
     allEvents.map(async ({ name, extraData }) => {
       await client.post("/automations/hooks", {
-        target_url: webhookUrl,
+        target_url: getWebhookUrl({ eventName: name, baseUrl: webhookUrl }),
         event: { name, ...extraData },
       });
     }),
@@ -54,14 +58,4 @@ try {
   console.log("Failed registering webhooks...");
 }
 
-const webhooks = await client.get("/automations/hooks").then((res) => res.data);
-
-console.log("The following webhooks are now registered:");
-webhooks.forEach((hook) => {
-  const { rule } = hook;
-  console.log(
-    `${rule.id} | ${rule.event.name} ${rule.event.tag_id ?? ""} | ${
-      rule.target_url
-    }`,
-  );
-});
+await printActiveWebhooks();

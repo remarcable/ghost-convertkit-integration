@@ -1,4 +1,5 @@
-import client from "./convertkitClient.mjs";
+import { printActiveWebhooks } from "./api/convertkitAPI.mjs";
+import client from "./api/convertkitClient.mjs";
 import inquirer from "inquirer";
 
 const { ruleIds } = await inquirer.prompt([
@@ -24,14 +25,4 @@ try {
   console.log("Failed removing webhooks...");
 }
 
-const webhooks = await client.get("/automations/hooks").then((res) => res.data);
-
-console.log("The following webhooks are still registered:");
-webhooks.forEach((hook) => {
-  const { rule } = hook;
-  console.log(
-    `${rule.id} | ${rule.event.name} ${rule.event.tag_id ?? ""} | ${
-      rule.target_url
-    }`,
-  );
-});
+await printActiveWebhooks();
