@@ -4,6 +4,6 @@ export const errorResponse = {
 };
 
 export const successResponse = {
-  statusCode: 20,
-  body: JSON.stringify({ status: 20 }, null, 2),
+  statusCode: 200,
+  body: JSON.stringify({ status: 200 }, null, 2),
 };

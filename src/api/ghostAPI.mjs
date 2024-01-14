@@ -3,6 +3,12 @@ import client from "./ghostClient.mjs";
 export const subscribeGhostMember = async ({ name, email }) => {
   const member = await getGhostMemberByEmail({ email });
 
+  // TODO: maybe add logic here with createdAt so member
+  // isn't updated multiple times during registration
+  // Similar to other API calls and webhooks: how do we prevent
+  // an infinite loop? I.e. how do we know that certain requests
+  // are referring to exactly the same thing?
+
   if (member) {
     return resubscribeGhostMember({ id: member.id });
   }
