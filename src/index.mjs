@@ -36,11 +36,11 @@ export const handler = async (event) => {
   }
 
   return {
-    statusCode: 400,
+    statusCode: 404,
     body: JSON.stringify(
       {
-        status: 400,
-        message: "Unknown service",
+        status: 404,
+        message: "Service not found",
       },
       null,
       2,

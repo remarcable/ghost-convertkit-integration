@@ -84,3 +84,11 @@ export const removeLabelFromGhostSubscriber = async ({ email, label }) => {
     labels: member.labels.filter((l) => l.name !== label),
   });
 };
+
+export const registerWebhook = async ({ event, baseUrl }) => {
+  return client.webhooks.add({
+    name: `Sync ${event}`,
+    event,
+    target_url: `${baseUrl}/ghost/${event}`,
+  });
+};
