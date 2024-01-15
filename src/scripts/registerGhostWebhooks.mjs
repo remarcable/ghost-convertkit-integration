@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import z from "zod";
-import { registerWebhook } from "./api/ghostAPI.mjs";
-import { GHOST_API_URL } from "./api/ghostClient.mjs";
+import { registerWebhook } from "../api/ghostAPI.mjs";
+import { GHOST_API_URL } from "../api/ghostClient.mjs";
 
 const events = ["member.added", "member.edited", "member.deleted"];
 

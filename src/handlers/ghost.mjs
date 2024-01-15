@@ -3,8 +3,8 @@ import {
   removeLabelFromConvertkitSubscriber,
   subscribeConvertkitMember,
   unsubscribeConvertkitMember,
-} from "./api/convertkitAPI.mjs";
-import { errorResponse, successResponse } from "./api/responses.mjs";
+} from "../api/convertkitAPI.mjs";
+import { errorResponse, successResponse } from "../api/responses.mjs";
 
 export const handleGhostEvent = async ({ eventName, event }) => {
   const { body } = event;

@@ -1,9 +1,9 @@
-import client from "./api/convertkitClient.mjs";
+import client from "../api/convertkitClient.mjs";
 import {
   getTagIdFromLabel,
   getWebhookUrl,
   printActiveWebhooks,
-} from "./api/convertkitAPI.mjs";
+} from "../api/convertkitAPI.mjs";
 import inquirer from "inquirer";
 import z from "zod";
 

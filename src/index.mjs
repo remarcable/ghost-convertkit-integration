@@ -20,8 +20,8 @@
 // unsubscibre ck => ghost
 // un/sub ghost => ck
 
-import { handleConvertkitEvent } from "./handleConvertkitEvent.mjs";
-import { handleGhostEvent } from "./handleGhostEvent.mjs";
+import { handleConvertkitEvent } from "./handlers/convertkit.mjs";
+import { handleGhostEvent } from "./handlers/ghost.mjs";
 
 export const handler = async (event) => {
   const { rawPath } = event;

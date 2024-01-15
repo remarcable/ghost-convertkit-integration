@@ -2,8 +2,8 @@ import {
   getActiveWebhooks,
   printActiveWebhooks,
   webhookToString,
-} from "./api/convertkitAPI.mjs";
-import client from "./api/convertkitClient.mjs";
+} from "../api/convertkitAPI.mjs";
+import client from "../api/convertkitClient.mjs";
 import inquirer from "inquirer";
 
 const webhooks = await getActiveWebhooks();
