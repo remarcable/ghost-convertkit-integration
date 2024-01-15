@@ -1,5 +1,6 @@
 import z from "zod";
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
 const { CONVERTKIT_API_SECRET } = z
   .object({
@@ -9,10 +10,21 @@ const { CONVERTKIT_API_SECRET } = z
 
 const client = axios.create({
   baseURL: "https://api.convertkit.com/v3",
-  timeout: 20000,
+  timeout: 25000,
   responseType: "json",
   params: {
     api_secret: CONVERTKIT_API_SECRET,
+  },
+});
+
+axiosRetry(client, {
+  retries: 3,
+  retryDelay: axiosRetry.exponentialDelay,
+  onRetry: (retryCount, error) => {
+    console.log(
+      `Retrying ConvertKit request for the ${retryCount}. time after error`,
+      error,
+    );
   },
 });
 
