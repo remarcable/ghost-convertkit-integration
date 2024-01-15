@@ -4,7 +4,11 @@ import {
   subscribeConvertkitMember,
   unsubscribeConvertkitMember,
 } from "../api/convertkitAPI.mjs";
-import { errorResponse, successResponse } from "../api/responses.mjs";
+import {
+  errorResponse,
+  notFoundResponse,
+  successResponse,
+} from "../api/responses.mjs";
 
 export const handleGhostEvent = async ({ eventName, event }) => {
   const { body } = event;
@@ -25,7 +29,6 @@ export const handleGhostEvent = async ({ eventName, event }) => {
       }
 
       await subscribeConvertkitMember({ email, name });
-
       break;
     }
     case "member.edited": {
@@ -78,7 +81,7 @@ export const handleGhostEvent = async ({ eventName, event }) => {
       break;
     }
     default: {
-      return errorResponse;
+      return notFoundResponse;
     }
   }
 

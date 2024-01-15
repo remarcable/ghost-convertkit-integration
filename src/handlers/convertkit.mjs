@@ -4,7 +4,11 @@ import {
   subscribeGhostMember,
   unsubscribeGhostMember,
 } from "../api/ghostAPI.mjs";
-import { errorResponse, successResponse } from "../api/responses.mjs";
+import {
+  errorResponse,
+  notFoundResponse,
+  successResponse,
+} from "../api/responses.mjs";
 
 export const handleConvertkitEvent = async ({
   eventName,
@@ -15,7 +19,6 @@ export const handleConvertkitEvent = async ({
   const payload = JSON.parse(body);
 
   const email = payload?.subscriber?.email_address;
-
   if (!email) {
     return errorResponse;
   }
@@ -24,7 +27,6 @@ export const handleConvertkitEvent = async ({
     case "subscriber.subscriber_activate": {
       const name = payload?.subscriber?.first_name;
       await subscribeGhostMember({ email, name });
-
       break;
     }
     case "subscriber.subscriber_unsubscribe": {
@@ -42,7 +44,7 @@ export const handleConvertkitEvent = async ({
       break;
     }
     default: {
-      return errorResponse;
+      return notFoundResponse;
     }
   }
   return successResponse;

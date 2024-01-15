@@ -1,5 +1,6 @@
 import { handleConvertkitEvent } from "./handlers/convertkit.mjs";
 import { handleGhostEvent } from "./handlers/ghost.mjs";
+import { notFoundResponse } from "./api/responses.mjs";
 
 export const handler = async (event) => {
   const { rawPath } = event;
@@ -13,15 +14,5 @@ export const handler = async (event) => {
     return handleGhostEvent({ eventName, event, extraInfo });
   }
 
-  return {
-    statusCode: 404,
-    body: JSON.stringify(
-      {
-        status: 404,
-        message: "Service not found",
-      },
-      null,
-      2,
-    ),
-  };
+  return notFoundResponse;
 };
