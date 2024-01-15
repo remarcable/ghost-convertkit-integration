@@ -100,10 +100,14 @@ export const webhookToString = ({ rule }) => {
 const printActiveWebhooks = async () => {
   const webhooks = await getActiveWebhooks();
 
-  console.log("The following webhooks are currently registered:");
-  webhooks.forEach((hook) => {
-    console.log(webhookToString(hook));
-  });
+  if (webhooks.length === 0) {
+    console.log("There aren't any webhooks (anymore).");
+  } else {
+    console.log("The following webhooks are currently registered:");
+    webhooks.forEach((hook) => {
+      console.log(webhookToString(hook));
+    });
+  }
 };
 
 export {
