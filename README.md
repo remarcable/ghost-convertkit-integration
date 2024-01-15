@@ -17,7 +17,7 @@ The official "integration" for Ghost and ConverKit is a set of [Zaps](https://gh
 - Easy registration of webhooks using custom scripts
 - Easy to extend and customize for other needs (create an issue and/or PR!)
 
-### Missing Features
+#### Missing Features
 
 The following features are missing because it's not possible to delete members using the ConvertKit API or triggering a resubscribe using ConvertKit.
 
@@ -34,14 +34,14 @@ To deploy or develop this integration, you need the following values and put the
 
 - `CONVERTKIT_API_SECRET`: ConvertKit [API Secret](https://app.convertkit.com/account_settings/advanced_settings)
 - `CONVERTKIT_SEQUENCE_ID`: ConvertKit Sequence ID (Open the [Sequence](https://app.convertkit.com/sequences) in the interface and note the last part in the URL, e.g. `1651234` in `https://app.convertkit.com/sequences/1651234`)
-- `GHOST_ADMIN_API_KEY` API key of a new custom integration. Go to Settings>Integrations and click on "Add custom integration". Copy the Admin API key.
+- `GHOST_ADMIN_API_KEY` API key of a new custom integration. Go to Settings > Integrations and click on "Add custom integration". Copy the Admin API key.
 - `GHOST_API_URL` Copy the API URL from your integration (should be the same as your Ghost blog, e.g. `https://www.example.com` without the trailing `/ghost`)
 
 ### Local Development
 
 #### Installation
 
-```
+```bash
 npm install
 cp .env.sample .env # Fill in the values from above
 npm start
@@ -51,7 +51,7 @@ npm start
 
 You can use [ngrok](https://ngrok.com/docs/getting-started/) to locally test the webhooks. In another terminal window, run:
 
-```
+```bash
 ngrok http 3000
 ```
 
@@ -61,7 +61,7 @@ Copy the public URL for the next step of registering the webhooks. It should loo
 
 To register the webhooks, run the following command:
 
-```
+```bash
 node src/scripts/registerConvertkitWebhooks.mjs
 ```
 
@@ -79,7 +79,7 @@ The following webhooks are currently registered:
 
 Repeat this step with the Ghost integration:
 
-```
+```bash
 node src/scripts/registerGhostWebhooks.mjs
 ```
 
@@ -91,7 +91,7 @@ After completing those steps, ConvertKit and Ghost are integrated through your l
 
 Setup your [AWS credentials](https://www.serverless.com/framework/docs/providers/aws/guide/credentials/) before deployment and follow the steps above. Then run the following command:
 
-```
+```bash
 $ npm run deploy
 ```
 
@@ -111,7 +111,7 @@ functions:
 
 Register the deployment URL in Ghost and ConvertKit:
 
-```
+```bash
 node src/scripts/registerConvertkitWebhooks.mjs
 
 # and then afterwards
@@ -122,12 +122,12 @@ node src/scripts/registerGhostWebhooks.mjs
 
 If you've set up the webhooks locally, remove them after registering the production endpoint using the following script:
 
-```
+```bash
 node src/scripts/unregisterConvertkitWebhooks.mjs
 ```
 
 For Ghost, it isn't possible to delete the old webhooks programmatically, so you need to visit your integration in `Ghost Settings > Integrations > Custom > <Your Integration>` and remove them manually.
 
-#### Done 🎉
+## Done 🎉
 
 Enjoy your stress-free no-quotes integration between Ghost and ConvertKit.
