@@ -5,7 +5,7 @@
   "scripts": {
     "start": "serverless offline",
     "deploy": "serverless deploy --stage production",
-    "redeploy": "serverless deploy function -f convertkit-ghost-integration --stage production",
+    "redeploy": "serverless deploy function -f ghost-ck-integration --stage production",
     "prettier": "prettier -w src",
     "lint": "eslint 'src/**'",
     "test": "echo \"Error: no test specified\" && exit 1"
