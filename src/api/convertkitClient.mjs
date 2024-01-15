@@ -9,7 +9,7 @@ const { CONVERTKIT_API_SECRET } = z
 
 const client = axios.create({
   baseURL: "https://api.convertkit.com/v3",
-  timeout: 10000,
+  timeout: 20000,
   responseType: "json",
   params: {
     api_secret: CONVERTKIT_API_SECRET,
