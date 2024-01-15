@@ -47,5 +47,7 @@ export const handleConvertkitEvent = async ({
       return notFoundResponse;
     }
   }
+
+  console.log("Successfully handled ConvertKit event");
   return successResponse;
 };

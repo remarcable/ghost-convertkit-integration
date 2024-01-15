@@ -85,5 +85,6 @@ export const handleGhostEvent = async ({ eventName, event }) => {
     }
   }
 
+  console.log("Successfully handled Ghost event");
   return successResponse;
 };

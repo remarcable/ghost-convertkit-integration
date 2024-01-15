@@ -1,10 +1,17 @@
 import { handleConvertkitEvent } from "./handlers/convertkit.mjs";
 import { handleGhostEvent } from "./handlers/ghost.mjs";
-import { notFoundResponse } from "./api/responses.mjs";
+import { notFoundResponse, successResponse } from "./api/responses.mjs";
 
 export const handler = async (event) => {
-  const { rawPath } = event;
+  const { rawPath, source } = event;
+
+  if (source === "serverless-plugin-warmup") {
+    console.log("Warmup - Lambda is warm!");
+    return successResponse;
+  }
+
   const [service, eventName, extraInfo] = rawPath.split("/").slice(1);
+  console.log("New event for", { service, eventName, extraInfo });
 
   if (service === "convertkit") {
     return handleConvertkitEvent({ eventName, event, extraInfo });
