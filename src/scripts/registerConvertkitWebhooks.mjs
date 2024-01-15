@@ -1,3 +1,4 @@
+import "dotenv/config";
 import client from "../api/convertkitClient.mjs";
 import {
   getTagIdFromLabel,

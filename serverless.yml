@@ -17,7 +17,7 @@ provider:
     CONVERTKIT_SEQUENCE_ID: ${env:CONVERTKIT_SEQUENCE_ID}
 
 functions:
-  convertkit-ghost-integration:
+  ghost-ck-integration:
     handler: src/index.handler
     events:
       - httpApi:

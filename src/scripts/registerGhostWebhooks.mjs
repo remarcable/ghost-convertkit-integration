@@ -1,3 +1,4 @@
+import "dotenv/config";
 import inquirer from "inquirer";
 import z from "zod";
 import { registerWebhook } from "../api/ghostAPI.mjs";

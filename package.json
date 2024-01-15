@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "serverless offline",
-    "deploy": "serverless deploy function -f convertkit-ghost-integration --stage production",
+    "deploy": "serverless deploy --stage production",
+    "redeploy": "serverless deploy function -f convertkit-ghost-integration --stage production",
     "prettier": "prettier -w src",
     "lint": "eslint 'src/**'",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,7 @@
   "dependencies": {
     "@tryghost/admin-api": "^1.13.11",
     "axios": "^1.6.5",
+    "dotenv": "^16.3.1",
     "inquirer": "^9.2.12",
     "zod": "^3.22.4"
   }
