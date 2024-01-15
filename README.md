@@ -104,7 +104,7 @@ Deploying aws-node-ghost-convertkit-integration to stage production (us-east-1)
 
 endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
 functions:
-  hello: aws-node-ghost-convertkit-integration-production-hello (1.9 kB)
+  ghost-ck-integration: aws-node-ghost-convertkit-integration-production (1.9 kB)
 ```
 
 #### Registering ConvertKit and Ghost webhooks
