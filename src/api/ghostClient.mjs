@@ -1,15 +1,16 @@
 import GhostAdminAPI from "@tryghost/admin-api";
 import z from "zod";
 
-const { GHOST_URL, GHOST_API_KEY } = z
+const { GHOST_API_URL, GHOST_ADMIN_API_KEY } = z
   .object({
-    GHOST_URL: z.string().url(),
-    GHOST_API_KEY: z.string(),
+    GHOST_API_URL: z.string().url(),
+    GHOST_ADMIN_API_KEY: z.string(),
   })
   .parse(process.env);
 
+export { GHOST_API_URL };
 export default new GhostAdminAPI({
-  url: GHOST_URL,
-  key: GHOST_API_KEY,
+  url: GHOST_API_URL,
+  key: GHOST_ADMIN_API_KEY,
   version: "v5.71",
 });
