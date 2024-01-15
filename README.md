@@ -4,7 +4,7 @@ This [serverless](https://github.com/serverless/serverless) function integrates/
 
 ## Motivation
 
-The official "integration" for Ghost and ConverKit is a set of [Zaps](https://ghost.org/integrations/convertkit/#sync-ghost-members-to-convertkit). As they weren't complete enough for my use case and paying for Zapier was too expensive for my personal blog, I decided to connect the two using a serverless function. This integration (without quotes) is a much more robust integration and easy to customize.
+The official "integration" for Ghost and ConverKit is a set of [Zaps](https://ghost.org/integrations/convertkit/#sync-ghost-members-to-convertkit). As they weren't complete enough for my use case and paying for Zapier was too expensive for my personal blog, I created this serverless function to connect the two. This integration (without quotes) is a much more robust integration and easy to customize.
 
 ## Features
 
@@ -34,7 +34,7 @@ To deploy or develop this integration, you need the following values and put the
 
 - `CONVERTKIT_API_SECRET`: ConvertKit [API Secret](https://app.convertkit.com/account_settings/advanced_settings)
 - `CONVERTKIT_SEQUENCE_ID`: ConvertKit Sequence ID (Open the [Sequence](https://app.convertkit.com/sequences) in the interface and note the last part in the URL, e.g. `1651234` in `https://app.convertkit.com/sequences/1651234`)
-- `GHOST_ADMIN_API_KEY` API key of a new custom integration. Go to Settings > Integrations and click on "Add custom integration". Copy the Admin API key.
+- `GHOST_ADMIN_API_KEY` API key of a new custom integration. Go to `Settings > Integrations` and click on "Add custom integration". Copy the Admin API key.
 - `GHOST_API_URL` Copy the API URL from your integration (should be the same as your Ghost blog, e.g. `https://www.example.com` without the trailing `/ghost`)
 
 ### Local Development
