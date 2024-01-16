@@ -107,6 +107,8 @@ functions:
   ghost-ck-integration: aws-node-ghost-convertkit-integration-production (1.9 kB)
 ```
 
+If you later change the code of the lambda, you can run `npm run redeploy` for faster deployment.
+
 #### Registering ConvertKit and Ghost webhooks
 
 Register the deployment URL in Ghost and ConvertKit:
