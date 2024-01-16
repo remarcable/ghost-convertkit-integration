@@ -10,9 +10,7 @@ import {
   successResponse,
 } from "../api/responses.mjs";
 
-export const handleGhostEvent = async ({ eventName, event }) => {
-  const { body } = event;
-  const payload = JSON.parse(body);
+export const handleGhostEvent = async ({ eventName, payload }) => {
   const email =
     payload?.member?.current?.email ?? payload?.member?.previous?.email;
 

@@ -12,12 +12,9 @@ import {
 
 export const handleConvertkitEvent = async ({
   eventName,
-  event,
+  payload,
   extraInfo,
 }) => {
-  const { body } = event;
-  const payload = JSON.parse(body);
-
   const email = payload?.subscriber?.email_address;
   if (!email) {
     return errorResponse;
