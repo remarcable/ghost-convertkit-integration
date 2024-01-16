@@ -36,8 +36,10 @@ export const handleGhostEvent = async ({ eventName, payload }) => {
         // TODO: Check for differences in newsletters instead of this "simple" heuristic
 
         if (previousNewsletters.length > currentNewsletters.length) {
+          console.log("Unsubscribing member");
           await unsubscribeConvertkitMember({ email });
         } else if (previousNewsletters.length < currentNewsletters.length) {
+          console.log("Subscribing member");
           const name = payload?.member?.current?.name;
           await subscribeConvertkitMember({ email, name });
         }
@@ -56,6 +58,14 @@ export const handleGhostEvent = async ({ eventName, payload }) => {
         const labelsToRemove = previousLabelNames.filter(
           (label) => !currentLabelNames.includes(label),
         );
+
+        if (labelsToAdd.length > 0) {
+          console.log("Adding the labels", labelsToAdd.join(", "));
+        }
+
+        if (labelsToRemove.length > 0) {
+          console.log("Removing the labels", labelsToRemove.join(", "));
+        }
 
         await Promise.all([
           ...labelsToAdd.map(
