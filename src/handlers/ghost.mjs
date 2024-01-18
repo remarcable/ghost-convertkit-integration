@@ -15,6 +15,7 @@ export const handleGhostEvent = async ({ eventName, payload }) => {
     payload?.member?.current?.email ?? payload?.member?.previous?.email;
 
   if (!email) {
+    console.log("No email found in Ghost event");
     return errorResponse;
   }
 

@@ -17,6 +17,7 @@ export const handleConvertkitEvent = async ({
 }) => {
   const email = payload?.subscriber?.email_address;
   if (!email) {
+    console.log("No email found in ConvertKit event");
     return errorResponse;
   }
 

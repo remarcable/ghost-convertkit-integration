@@ -1,3 +1,5 @@
+org: remarcable
+app: ghost-ck
 service: ghost-convertkit-integration
 frameworkVersion: "3"
 
@@ -10,7 +12,7 @@ useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs18.x
   environment:
     GHOST_ADMIN_API_KEY: ${env:GHOST_ADMIN_API_KEY}
     GHOST_API_URL: ${env:GHOST_API_URL}
